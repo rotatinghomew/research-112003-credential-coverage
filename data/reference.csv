@@ -1,0 +1,5 @@
+channel,category,slot,target_share
+mobile,guidance,evening,0.45
+web,guidance,afternoon,0.30
+mobile,consultation,afternoon,0.10
+web,consultation,evening,0.15

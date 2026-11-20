@@ -4,7 +4,7 @@ from pathlib import Path
 import unittest
 
 DATA = Path(__file__).resolve().parents[1] / 'data'
-TABLES = {'shows': ('show', 'channel', 'category', 'day', 'minutes', 'host'), 'segments': ('segment', 'show', 'start', 'end', 'candidates', 'known', 'ref', 'state'), 'policy': ('id', 'channel', 'category', 'start', 'end', 'evidence_kind'), 'credentials': ('doc', 'person', 'kind', 'channel', 'category', 'start', 'end', 'known', 'state', 'replaces'), 'requests': ('request', 'segment', 'doc_hint', 'requested', 'owner', 'state'), 'reports': ('report', 'asof', 'from_day', 'to_day', 'kind')}
+TABLES = {'shows': ('show', 'channel', 'category', 'day', 'minutes', 'host'), 'segments': ('segment', 'show', 'start', 'end', 'candidates', 'known', 'ref', 'state'), 'policy': ('id', 'channel', 'category', 'start', 'end', 'evidence_kind'), 'credentials': ('doc', 'person', 'kind', 'channel', 'category', 'start', 'end', 'known', 'state', 'replaces'), 'requests': ('request', 'segment', 'doc_hint', 'requested', 'owner', 'state'), 'reports': ('report', 'asof', 'from_day', 'to_day', 'kind'), 'comparisons': ('comparison', 'asof', 'base_start', 'base_stop', 'test_start', 'test_stop', 'mode', 'min_improvement'), 'reference': ('channel', 'category', 'slot', 'target_share'), 'show_slots': ('show', 'slot'), 'verification_options': ('request', 'source', 'relates', 'cost', 'known', 'available_before'), 'verification_budget': ('week', 'source', 'hours', 'already_assigned')}
 RELATION = ('requests', 'segment', 'segments', 'segment')
 
 
@@ -29,3 +29,5 @@ class SourceContract(unittest.TestCase):
     def test_source_variation(self):
         self.assertEqual({row['segment'] for row in self.read('requests') if row['doc_hint'] == 'd6'}, {'g3', 'g6'})
         self.assertIn('p1|p2', {row['candidates'] for row in self.read('segments')})
+        self.assertAlmostEqual(sum(float(row['target_share']) for row in self.read('reference')), 1)
+        self.assertTrue(any('|' in row['relates'] for row in self.read('verification_options')))
