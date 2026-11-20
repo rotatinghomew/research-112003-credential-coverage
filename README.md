@@ -28,4 +28,22 @@
 python3 -m unittest discover -s tests -v
 ```
 
-这项检查核对资料格式与引用，不生成业务结论。
+`tests/test_sources.py` 核对资料格式与引用，不生成业务结论；`tests/test_coverage.py`
+锁定核验引擎的业务口径（三桶、口径切换、撤回与更正链、联合身份枚举等）。
+
+## 核验引擎与月会报告
+
+- `analysis/coverage_engine.py`：按 asof 时点装载材料，实施主体/类别/渠道/有效期
+  四维匹配、左闭右开口径、replaces 更正链与分段撤回链，输出 covered / unsupported /
+  pending 三桶，以及分钟口径与独立出镜人口径两套汇总。
+- `analysis/build_report.py`：生成月会报告 `analysis/report.md`（同时打印到标准输出）。
+  数据目录与脚本目录分离，运行使用隔离模式：
+
+```sh
+python3 -I analysis/build_report.py
+python3 -I -m unittest discover -s tests -v
+```
+
+历史考核（m1，asof=21）按当次口径与材料找回；现时回看（m2，asof=26）不覆盖历史结论。
+两期比较（v1/v2）只在相同渠道 × 声称类别 × 时段的可判定格内进行，口径切换、结构缺格
+与证据订正效应单列，不以两次覆盖率相减充当改善。
