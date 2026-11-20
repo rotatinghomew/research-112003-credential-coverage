@@ -1,0 +1,8 @@
+show,channel,category,day,minutes,host
+s1,mobile,guidance,7,60,p3
+s2,web,guidance,9,12,p2
+s3,web,consultation,10,30,p1
+s4,mobile,guidance,11,40,p1
+s5,web,guidance,18,75,p2
+s6,mobile,consultation,18,10,p2
+s7,mobile,guidance,20,6,p1

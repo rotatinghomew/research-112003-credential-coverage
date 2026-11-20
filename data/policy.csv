@@ -1,0 +1,6 @@
+id,channel,category,start,end,evidence_kind
+u1,mobile,guidance,1,15,local
+u2,mobile,guidance,15,32,association
+u3,web,guidance,1,32,local
+u4,mobile,consultation,1,32,registry
+u5,web,consultation,1,32,registry
